@@ -8,9 +8,11 @@ interface IRequest {
 
 class CreateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
-
   execute({ email, name }: IRequest): User {
-    // Complete aqui
+    if (this.usersRepository.findByEmail(email)) {
+      throw new Error("Mensagem do erro")
+    }
+    return this.usersRepository.create({name, email})
   }
 }
 
